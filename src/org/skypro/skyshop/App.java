@@ -2,6 +2,9 @@ package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.product.special.DiscountedProduct;
+import org.skypro.skyshop.product.special.FixPriceProduct;
+import org.skypro.skyshop.product.special.SimpleProduct;
 
 public class App {
 
@@ -14,13 +17,13 @@ public class App {
         ProductBasket basket1 = new ProductBasket();
         ProductBasket basket2 = new ProductBasket();
 
-        Product product1 = new Product("Степлер", 500);
-        Product product2 = new Product("Ручка гелевая синяя", 120);
-        Product product3 = new Product("Бумага для принтера А4", 700);
-        Product product4 = new Product("Ручка шариковая синяя", 55);
-        Product product5 = new Product("Линейка металлическая", 30);
-        Product product6 = new Product("Карандаш графитовый", 20);
-        Product product7 = new Product("Дырокол", 500);
+        Product product1 = new SimpleProduct("Степлер", 500);
+        Product product2 = new SimpleProduct("Ручка гелевая синяя", 120);
+        Product product3 = new DiscountedProduct("Бумага для принтера А4", 700, 20);
+        Product product4 = new FixPriceProduct("Ручка шариковая синяя");
+        Product product5 = new SimpleProduct("Линейка металлическая", 30);
+        Product product6 = new FixPriceProduct("Карандаш графитовый");
+        Product product7 = new DiscountedProduct("Дырокол", 500, 15);
 
         basket1.addProduct(product1);
         basket1.addProduct(product2);

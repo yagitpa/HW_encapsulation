@@ -1,0 +1,40 @@
+package org.skypro.skyshop.product.special;
+
+import org.skypro.skyshop.product.Product;
+
+public class DiscountedProduct extends Product {
+
+    private double basePrice;
+    private int discountWholePercentages;
+
+    public DiscountedProduct(String name, double basePrice, int discountWholePercentages) {
+        super(name);
+        if (basePrice < 0) {
+            throw new IllegalArgumentException("Цена не может быть отрицательной");
+        }
+        if (discountWholePercentages < 0 || discountWholePercentages > 100) {
+            throw new IllegalArgumentException("Скидка на товар не может быть меньше 0 и больше 100");
+        }
+        this.basePrice = basePrice;
+        this.discountWholePercentages = discountWholePercentages;
+    }
+
+    @Override
+    public double getPrice() {
+        return basePrice - (basePrice * discountWholePercentages / 100);
+    }
+
+    @Override
+    public String toString() {
+        return "Товар со скидкой: " + getName() + ", Начальная цена: " + basePrice + " р., Скидка: " + discountWholePercentages +
+                "%, Цена со скидкой: " + getPrice() + " р.";
+    }
+
+    @Override
+    public boolean isSpecial() {
+        return true;
+    }
+}
+
+
+
