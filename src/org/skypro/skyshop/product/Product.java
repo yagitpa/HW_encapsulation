@@ -1,10 +1,8 @@
 package org.skypro.skyshop.product;
 
-import org.skypro.skyshop.search.Searchable;
-
 import java.util.Objects;
 
-public abstract class Product implements Searchable {
+public abstract class Product {
     protected final String name;
 
     public Product(String name) {
@@ -12,16 +10,6 @@ public abstract class Product implements Searchable {
             throw new IllegalArgumentException("Наименование товара не может быть пустым или отсутствовать!");
         }
         this.name = name;
-    }
-
-    @Override
-    public String getSearchTerm() {
-        return name;
-    }
-
-    @Override
-    public String getContentType() {
-        return "PRODUCT";
     }
 
     public String getName() {
