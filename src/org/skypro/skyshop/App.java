@@ -83,27 +83,6 @@ public class App {
         basket2.printProducts();
         printSeparator();
 
-//        // тест использования класса Article
-//        Article article = new Article("Распродажа", "Черная пятница всю неделю!");
-//        System.out.println(article);
-//        printSeparator();
-//
-//        // тест использования интерфейса Searchable
-//        Searchable product = new FixPriceProduct("Ручка шариковая синяя");
-//        Searchable article2 = new Article("Распродажа шариковых ручек", "На этой неделе все товары из категории " +
-//                "шариковых ручк продаются по специальной цене!");
-//
-//        System.out.println(product.getStringRepresentation());
-//        System.out.println(article.getStringRepresentation());
-//
-//        System.out.println("Поисковый запрос для товаров: " + product.getSearchTerm());
-//        System.out.println("Тип товара: " + product.getContentType());
-//
-//        System.out.println("Поисковый запрос для статей: " + article2.getSearchTerm());
-//        System.out.println("Тип статьи: " + article2.getContentType());
-//        printSeparator();
-
-
         SearchEngine engine = new SearchEngine(10);
 
         Searchable article1 = new Article("Бумага", "Расширение ассортимента бумаги для принтера");
