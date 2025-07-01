@@ -4,7 +4,10 @@ import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.special.*;
+import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
+
+import static org.skypro.skyshop.search.SearchEngine.displayResults;
 
 public class App {
 
@@ -80,24 +83,55 @@ public class App {
         basket2.printProducts();
         printSeparator();
 
-        // тест использования класса Article
-        Article article = new Article("Распродажа", "Черная пятница всю неделю!");
-        System.out.println(article);
+//        // тест использования класса Article
+//        Article article = new Article("Распродажа", "Черная пятница всю неделю!");
+//        System.out.println(article);
+//        printSeparator();
+//
+//        // тест использования интерфейса Searchable
+//        Searchable product = new FixPriceProduct("Ручка шариковая синяя");
+//        Searchable article2 = new Article("Распродажа шариковых ручек", "На этой неделе все товары из категории " +
+//                "шариковых ручк продаются по специальной цене!");
+//
+//        System.out.println(product.getStringRepresentation());
+//        System.out.println(article.getStringRepresentation());
+//
+//        System.out.println("Поисковый запрос для товаров: " + product.getSearchTerm());
+//        System.out.println("Тип товара: " + product.getContentType());
+//
+//        System.out.println("Поисковый запрос для статей: " + article2.getSearchTerm());
+//        System.out.println("Тип статьи: " + article2.getContentType());
+//        printSeparator();
+
+
+        SearchEngine engine = new SearchEngine(10);
+
+        Searchable article1 = new Article("Бумага", "Расширение ассортимента бумаги для принтера");
+        Searchable article2 = new Article("Степлеры", "Разнообразие, виды, назначение");
+        Searchable article3 = new Article("Кресло руководителя", "Это не просто кресло!");
+        Searchable article4 = new Article("Кресло для геймера", "Со специальным антипригарным покрытием!");
+
+        engine.add(product1);
+        engine.add(product2);
+        engine.add(product3);
+        engine.add(article1);
+        engine.add(article2);
+        engine.add(article3);
+        engine.add(article4);
+
+        System.out.println("Тестирование работы поиска:");
         printSeparator();
+        System.out.println("Поиск по слову \"Степлер\":");
+        displayResults(engine.search("Степлер"));
 
-        // тест использования интерфейса Searchable
-        Searchable product = new FixPriceProduct("Ручка шариковая синяя");
-        Searchable article2 = new Article("Распродажа шариковых ручек", "На этой неделе все товары из категории " +
-                "шариковых ручк продаются по специальной цене!");
+        System.out.println("Поиск по слову \"Кресло\":");
+        displayResults(engine.search("Кресло"));
 
-        System.out.println(product.getStringRepresentation());
-        System.out.println(article.getStringRepresentation());
+        System.out.println("Поиск по слову \"Бумага\":");
+        displayResults(engine.search("Бумага"));
 
-        System.out.println("Поисковый запрос для товаров: " + product.getSearchTerm());
-        System.out.println("Тип товара: " + product.getContentType());
-
-        System.out.println("Поисковый запрос для статей: " + article2.getSearchTerm());
-        System.out.println("Тип статьи: " + article2.getContentType());
+        System.out.println("Поиск по слову \"Мороженое\":");
+        displayResults(engine.search("Мороженое"));
         printSeparator();
     }
 }

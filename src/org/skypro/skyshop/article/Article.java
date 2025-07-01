@@ -25,12 +25,12 @@ public final class Article implements Searchable {
 
     @Override
     public String getContentType() {
-        return "Анонс";
+        return "ARTICLE";
     }
 
     @Override
     public String getName() {
-        return title;
+        return title + ": " + text;
     }
 
     public String getTitle() {

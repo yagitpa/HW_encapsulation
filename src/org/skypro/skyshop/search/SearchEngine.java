@@ -8,7 +8,7 @@ public class SearchEngine {
         this.items = new Searchable[size];
     }
 
-    public void addItem(Searchable item) {
+    public void add(Searchable item) {
         if (currentIndex < items.length) {
             items[currentIndex++] = item;
         } else {
@@ -21,11 +21,26 @@ public class SearchEngine {
         int resultIndex = 0;
 
         for (Searchable item : items) {
-            if (item != null && item.getSearchTerm().contains(query) && resultIndex <= 5) {
+            if (item != null && item.getSearchTerm().contains(query)) {
                 results[resultIndex++] = item;
             }
-            break;
+            if (resultIndex == 5) {
+                break;
+            }
         }
         return results;
+    }
+
+    public static void displayResults(Searchable[] results) {
+        boolean foundAnything = false;
+        for (Searchable result : results) {
+            if (result != null) {
+                System.out.println(result.getStringRepresentation());
+                foundAnything = true;
+            }
+        }
+        if (!foundAnything) {
+            System.out.println("Ничего не найдено");
+        }
     }
 }
