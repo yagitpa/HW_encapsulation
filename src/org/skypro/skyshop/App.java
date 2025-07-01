@@ -1,13 +1,10 @@
 package org.skypro.skyshop;
 
-import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.Product;
-import org.skypro.skyshop.product.special.*;
-import org.skypro.skyshop.search.SearchEngine;
-import org.skypro.skyshop.search.Searchable;
-
-import static org.skypro.skyshop.search.SearchEngine.displayResults;
+import org.skypro.skyshop.product.special.DiscountedProduct;
+import org.skypro.skyshop.product.special.FixPriceProduct;
+import org.skypro.skyshop.product.special.SimpleProduct;
 
 public class App {
 
@@ -81,36 +78,6 @@ public class App {
 
         System.out.println("Содержимое корзины #2:");
         basket2.printProducts();
-        printSeparator();
-
-        SearchEngine engine = new SearchEngine(10);
-
-        Searchable article1 = new Article("Бумага", "Расширение ассортимента бумаги для принтера");
-        Searchable article2 = new Article("Степлеры", "Разнообразие, виды, назначение");
-        Searchable article3 = new Article("Кресло руководителя", "Это не просто кресло!");
-        Searchable article4 = new Article("Кресло для геймера", "Со специальным антипригарным покрытием!");
-
-        engine.add(product1);
-        engine.add(product2);
-        engine.add(product3);
-        engine.add(article1);
-        engine.add(article2);
-        engine.add(article3);
-        engine.add(article4);
-
-        System.out.println("Тестирование работы поиска:");
-        printSeparator();
-        System.out.println("Поиск по слову \"Степлер\":");
-        displayResults(engine.search("Степлер"));
-
-        System.out.println("Поиск по слову \"Кресло\":");
-        displayResults(engine.search("Кресло"));
-
-        System.out.println("Поиск по слову \"Бумага\":");
-        displayResults(engine.search("Бумага"));
-
-        System.out.println("Поиск по слову \"Мороженое\":");
-        displayResults(engine.search("Мороженое"));
         printSeparator();
     }
 }
