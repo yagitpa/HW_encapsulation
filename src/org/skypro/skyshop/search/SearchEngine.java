@@ -31,16 +31,5 @@ public class SearchEngine {
         return results;
     }
 
-    public static void displayResults(Searchable[] results) {
-        boolean foundAnything = false;
-        for (Searchable result : results) {
-            if (result != null) {
-                System.out.println(result.getStringRepresentation());
-                foundAnything = true;
-            }
-        }
-        if (!foundAnything) {
-            System.out.println("Ничего не найдено");
-        }
-    }
+
 }
