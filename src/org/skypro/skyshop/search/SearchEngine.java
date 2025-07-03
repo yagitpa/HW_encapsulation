@@ -19,9 +19,10 @@ public class SearchEngine {
     public Searchable[] search(String query) {
         Searchable[] results = new Searchable[5];
         int resultIndex = 0;
+        String lowerCaseQuery = query.toLowerCase();
 
         for (Searchable item : items) {
-            if (item != null && item.getSearchTerm().contains(query)) {
+            if (item != null && item.getSearchTerm().toLowerCase().contains(lowerCaseQuery)) {
                 results[resultIndex++] = item;
             }
             if (resultIndex == 5) {
