@@ -98,10 +98,10 @@ public class App {
         System.out.println("Тестирование работы поиска:");
         printSeparator();
         System.out.println("Поиск по слову \"Степлер\":");
-        displayResults(engine.search("степлер"));
+        displayResults(engine.search("СТЕПЛЕР"));
 
         System.out.println("Поиск по слову \"Кресло\":");
-        displayResults(engine.search("кресло"));
+        displayResults(engine.search("кРесЛо"));
 
         System.out.println("Поиск по слову \"Бумага\":");
         displayResults(engine.search("Бумага"));

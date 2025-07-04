@@ -25,7 +25,7 @@ public class SearchEngine {
             if (item != null && item.getSearchTerm().toLowerCase().contains(lowerCaseQuery)) {
                 results[resultIndex++] = item;
             }
-            if (resultIndex == 5) {
+            if (resultIndex == results.length) {
                 break;
             }
         }
