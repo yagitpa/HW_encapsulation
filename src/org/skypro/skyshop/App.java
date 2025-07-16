@@ -4,10 +4,7 @@ import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.special.*;
-import org.skypro.skyshop.search.SearchEngine;
-import org.skypro.skyshop.search.Searchable;
-
-import static org.skypro.skyshop.search.SearchEngine.displayResults;
+import org.skypro.skyshop.search.*;
 
 public class App {
 
@@ -101,10 +98,10 @@ public class App {
         System.out.println("Тестирование работы поиска:");
         printSeparator();
         System.out.println("Поиск по слову \"Степлер\":");
-        displayResults(engine.search("Степлер"));
+        displayResults(engine.search("СТЕПЛЕР"));
 
         System.out.println("Поиск по слову \"Кресло\":");
-        displayResults(engine.search("Кресло"));
+        displayResults(engine.search("кРесЛо"));
 
         System.out.println("Поиск по слову \"Бумага\":");
         displayResults(engine.search("Бумага"));
@@ -112,6 +109,18 @@ public class App {
         System.out.println("Поиск по слову \"Мороженое\":");
         displayResults(engine.search("Мороженое"));
         printSeparator();
+    }
+    private static void displayResults(Searchable[] results) {
+        boolean foundAnything = false;
+        for (Searchable result : results) {
+            if (result != null) {
+                System.out.println(result.getStringRepresentation());
+                foundAnything = true;
+            }
+        }
+        if (!foundAnything) {
+            System.out.println("Ничего не найдено");
+        }
     }
 }
 
