@@ -1,5 +1,7 @@
 package org.skypro.skyshop.search;
 
+import org.skypro.skyshop.exceptions.BestResultNotFound;
+
 public class SearchEngine {
     private final Searchable[] items;
     private int currentIndex = 0;
@@ -32,7 +34,7 @@ public class SearchEngine {
         return results;
     }
 
-    public Searchable findBestResult(String search) {
+    public Searchable findBestResult(String search) throws BestResultNotFound {
         if (search == null || search.isBlank()) {
             throw new IllegalArgumentException("Поисовый запрос не может быть пустым");
         }
@@ -41,13 +43,18 @@ public class SearchEngine {
         int maxOccurrences = -1;
 
         for (Searchable item : items) {
-            if (item != null) {
-                int occurrences = countOccurrences(item.getSearchTerm(), search);
-                if (occurrences > maxOccurrences) {
-                    maxOccurrences = occurrences;
-                    bestResult = item;
-                }
+            if (item == null) {
+                continue;
             }
+            int occurrences = countOccurrences(item.getSearchTerm(), search);
+            if (occurrences > maxOccurrences) {
+                maxOccurrences = occurrences;
+                bestResult = item;
+            }
+        }
+
+        if (maxOccurrences < 1) {
+            throw new BestResultNotFound("По Вашему запросу \"" + search + "\" ничего не найдено");
         }
         return bestResult;
     }

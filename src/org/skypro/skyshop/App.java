@@ -6,6 +6,7 @@ import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.special.*;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
+import org.skypro.skyshop.exceptions.BestResultNotFound;
 
 public class App {
 
@@ -135,12 +136,18 @@ public class App {
         displayResults(engine.search("Мороженое"));
         printSeparator();
 
-        Searchable bestResult = engine.findBestResult("кресло");
-        if (bestResult != null) {
-            System.out.println("Демонстрация представления поиска с лучшим результатом:");
-            System.out.println(bestResult.getStringRepresentation());
-        } else {
-            System.out.println("Элемент не найден.");
+        try {
+            Searchable bestResult = engine.findBestResult("кресло");
+            System.out.println("Подходящий результат по Вашему запросу найден:\n" + bestResult.getStringRepresentation());
+        } catch (BestResultNotFound e) {
+            System.err.println(e.getMessage());
+        }
+
+        try {
+            Searchable bestResult = engine.findBestResult("часы");
+            System.out.println("Подходящий результат по Вашему запросу найден:\n" + bestResult.getStringRepresentation());
+        } catch (BestResultNotFound e) {
+            System.err.println(e.getMessage());
         }
         printSeparator();
     }
