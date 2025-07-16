@@ -32,5 +32,33 @@ public class SearchEngine {
         return results;
     }
 
+    public Searchable findBestResult(String search) {
+        if (search == null || search.isBlank()) {
+            throw new IllegalArgumentException("Поисовый запрос не может быть пустым");
+        }
 
+        Searchable bestResult = null;
+        int maxOccurrences = -1;
+
+        for (Searchable item : items) {
+            if (item != null) {
+                int occurrences = countOccurrences(item.getSearchTerm(), search);
+                if (occurrences > maxOccurrences) {
+                    maxOccurrences = occurrences;
+                    bestResult = item;
+                }
+            }
+        }
+        return bestResult;
+    }
+
+    private int countOccurrences(String source, String target) {
+        int count = 0;
+        int index =0;
+        while ((index = source.indexOf(target, index)) != -1) {
+            count++;
+            index += target.length();
+        }
+        return count;
+    }
 }
