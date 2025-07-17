@@ -40,7 +40,7 @@ public class SearchEngine {
         }
 
         Searchable bestResult = null;
-        int maxOccurrences = -1;
+        int maxOccurrences = 0;
 
         for (Searchable item : items) {
             if (item == null) {
@@ -53,7 +53,7 @@ public class SearchEngine {
             }
         }
 
-        if (maxOccurrences < 1) {
+        if (bestResult == null) {
             throw new BestResultNotFound("По Вашему запросу \"" + search + "\" ничего не найдено");
         }
         return bestResult;
