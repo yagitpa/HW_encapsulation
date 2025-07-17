@@ -4,7 +4,9 @@ import org.skypro.skyshop.article.Article;
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.special.*;
-import org.skypro.skyshop.search.*;
+import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.search.Searchable;
+import org.skypro.skyshop.exceptions.BestResultNotFound;
 
 public class App {
 
@@ -24,6 +26,30 @@ public class App {
         Product product5 = new SimpleProduct("Линейка металлическая", 30);
         Product product6 = new FixPriceProduct("Карандаш графитовый");
         Product product7 = new DiscountedProduct("Дырокол", 500, 15);
+
+        try {
+            Product product20 = new SimpleProduct("", 15);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            Product product21 = new SimpleProduct("Корзина для бумаг", 0);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            Product product22 = new DiscountedProduct("Скобы", 150, 120);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            Product product23 = new DiscountedProduct("Скобы", 0, 15);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
 
         basket1.addProduct(product1);
         basket1.addProduct(product2);
@@ -109,7 +135,23 @@ public class App {
         System.out.println("Поиск по слову \"Мороженое\":");
         displayResults(engine.search("Мороженое"));
         printSeparator();
+
+        try {
+            Searchable bestResult = engine.findBestResult("кресло");
+            System.out.println("Подходящий результат по Вашему запросу найден:\n" + bestResult.getStringRepresentation());
+        } catch (BestResultNotFound e) {
+            System.err.println(e.getMessage());
+        }
+
+        try {
+            Searchable bestResult = engine.findBestResult("часы");
+            System.out.println("Подходящий результат по Вашему запросу найден:\n" + bestResult.getStringRepresentation());
+        } catch (BestResultNotFound e) {
+            System.err.println(e.getMessage());
+        }
+        printSeparator();
     }
+
     private static void displayResults(Searchable[] results) {
         boolean foundAnything = false;
         for (Searchable result : results) {

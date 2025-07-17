@@ -9,11 +9,11 @@ public class DiscountedProduct extends Product {
 
     public DiscountedProduct(String name, double basePrice, int discountWholePercentages) {
         super(name);
-        if (basePrice < 0) {
-            throw new IllegalArgumentException("Цена не может быть отрицательной");
+        if (basePrice <= 0) {
+            throw new IllegalArgumentException("Цена товара должна быть строго больше нуля!");
         }
         if (discountWholePercentages < 0 || discountWholePercentages > 100) {
-            throw new IllegalArgumentException("Скидка на товар не может быть меньше 0 и больше 100");
+            throw new IllegalArgumentException("Скидка на товар не может быть меньше 0 и больше 100%");
         }
         this.basePrice = basePrice;
         this.discountWholePercentages = discountWholePercentages;
