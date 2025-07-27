@@ -8,6 +8,8 @@ import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 import org.skypro.skyshop.exceptions.BestResultNotFound;
 
+import java.util.List;
+
 public class App {
 
     public static void printSeparator() {
@@ -60,14 +62,29 @@ public class App {
         basket2.addProduct(product7);
 
         printSeparator();
-        basket1.addProduct(product5);
-        printSeparator();
-
-        System.out.println("Содержимое корзины #1:");
+        System.out.println("Содержимое корзины #1 (ДО удаления по наименованию товара):");
         basket1.printProducts();
         printSeparator();
 
         System.out.println("Общая стоимость корзины #1: " + basket1.totalCost() + " р.");
+        printSeparator();
+
+        List<Product> removedProducts = basket1.removeProductByName("Яблоко");
+
+        if (removedProducts.isEmpty()) {
+            System.out.println("Список удаленных товаров пуст!");
+        } else
+            System.out.println("Список удаленных продуктов из корзины №1:");
+            for (Product product : removedProducts) {
+                System.out.println(product.getName() + ": " + product.getPrice());
+        }
+
+        System.out.println();
+        System.out.println("Содержимое корзины №1 (ПОСЛЕ удаления по наименованию товара):");
+        basket1.printProducts();
+
+        System.out.println();
+        System.out.println("Общая стоимость корзины #1 после удаления: " + basket1.totalCost() + " р.");
         printSeparator();
 
         System.out.println("Поиск в корзине #1 товара " + "\"" + product1.getName() + "\" ...");
@@ -106,7 +123,7 @@ public class App {
         basket2.printProducts();
         printSeparator();
 
-        SearchEngine engine = new SearchEngine(10);
+        SearchEngine engine = new SearchEngine();
 
         Searchable article1 = new Article("Бумага", "Расширение ассортимента бумаги для принтера");
         Searchable article2 = new Article("Степлеры", "Разнообразие, виды, назначение");
@@ -124,17 +141,10 @@ public class App {
         System.out.println("Тестирование работы поиска:");
         printSeparator();
         System.out.println("Поиск по слову \"Степлер\":");
-        displayResults(engine.search("СТЕПЛЕР"));
-
-        System.out.println("Поиск по слову \"Кресло\":");
-        displayResults(engine.search("кРесЛо"));
-
-        System.out.println("Поиск по слову \"Бумага\":");
-        displayResults(engine.search("Бумага"));
-
-        System.out.println("Поиск по слову \"Мороженое\":");
-        displayResults(engine.search("Мороженое"));
-        printSeparator();
+        List<Searchable> results = engine.search("СТеПЛЕР");
+        for (Searchable result : results) {
+            System.out.println(result.getStringRepresentation());
+        }
 
         try {
             Searchable bestResult = engine.findBestResult("кресло");
@@ -150,19 +160,6 @@ public class App {
             System.err.println(e.getMessage());
         }
         printSeparator();
-    }
-
-    private static void displayResults(Searchable[] results) {
-        boolean foundAnything = false;
-        for (Searchable result : results) {
-            if (result != null) {
-                System.out.println(result.getStringRepresentation());
-                foundAnything = true;
-            }
-        }
-        if (!foundAnything) {
-            System.out.println("Ничего не найдено");
-        }
     }
 }
 
