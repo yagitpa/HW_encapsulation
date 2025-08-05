@@ -9,6 +9,7 @@ import org.skypro.skyshop.search.Searchable;
 import org.skypro.skyshop.exceptions.BestResultNotFound;
 
 import java.util.List;
+import java.util.Map;
 
 public class App {
 
@@ -140,10 +141,10 @@ public class App {
 
         System.out.println("Тестирование работы поиска:");
         printSeparator();
-        System.out.println("Поиск по слову \"Степлер\":");
-        List<Searchable> results = engine.search("СТеПЛЕР");
-        for (Searchable result : results) {
-            System.out.println(result.getStringRepresentation());
+        System.out.println("Поиск по слову \"Степлер\": (результаты упорядочены по именам)");
+        Map<String, Searchable> results = engine.search("СтеПлер");
+        for (Map.Entry<String, Searchable> entry : results.entrySet()) {
+            System.out.println(entry.getValue().getStringRepresentation());
         }
 
         try {
