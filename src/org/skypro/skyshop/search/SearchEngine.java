@@ -2,33 +2,23 @@ package org.skypro.skyshop.search;
 
 import org.skypro.skyshop.exceptions.BestResultNotFound;
 
-public class SearchEngine {
-    private final Searchable[] items;
-    private int currentIndex = 0;
+import java.util.ArrayList;
+import java.util.List;
 
-    public SearchEngine(int size) {
-        this.items = new Searchable[size];
-    }
+public class SearchEngine {
+    private final List<Searchable> items = new ArrayList<>();
 
     public void add(Searchable item) {
-        if (currentIndex < items.length) {
-            items[currentIndex++] = item;
-        } else {
-            System.out.println("Больше нельзя добавить элементов");
-        }
+        items.add(item);
     }
 
-    public Searchable[] search(String query) {
-        Searchable[] results = new Searchable[5];
-        int resultIndex = 0;
+    public List<Searchable> search(String query) {
+        List<Searchable> results = new ArrayList<>();
         String lowerCaseQuery = query.toLowerCase();
 
         for (Searchable item : items) {
             if (item != null && item.getSearchTerm().toLowerCase().contains(lowerCaseQuery)) {
-                results[resultIndex++] = item;
-            }
-            if (resultIndex == results.length) {
-                break;
+                results.add(item);
             }
         }
         return results;
@@ -36,7 +26,7 @@ public class SearchEngine {
 
     public Searchable findBestResult(String search) throws BestResultNotFound {
         if (search == null || search.isBlank()) {
-            throw new IllegalArgumentException("Поисовый запрос не может быть пустым");
+            throw new IllegalArgumentException("Поисковый запрос не может быть пустым");
         }
 
         Searchable bestResult = null;
