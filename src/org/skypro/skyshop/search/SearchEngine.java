@@ -5,22 +5,30 @@ import org.skypro.skyshop.exceptions.BestResultNotFound;
 import java.util.*;
 
 public class SearchEngine {
-    private final List<Searchable> items = new LinkedList<>();
+    private final Set<Searchable> items = new HashSet<>();
 
     public void add(Searchable item) {
         items.add(item);
     }
 
-    public Map<String, Searchable> search(String query) {
-        TreeMap<String, Searchable> sortedResults = new TreeMap<>();
+    public Set<Searchable> search(String query) {
+        Comparator<Searchable> comparator = (s1, s2) -> {
+            int lengthCompare = Integer.compare(s2.getName().length(), s1.getName().length());
+            if (lengthCompare != 0) {
+                return lengthCompare;
+            }
+            return s1.getName().compareTo(s2.getName());
+        };
+
+        Set <Searchable> results = new TreeSet<>(comparator);
         String lowerCaseQuery = query.toLowerCase();
 
         for (Searchable item : items) {
             if (item != null && item.getSearchTerm().toLowerCase().contains(lowerCaseQuery)) {
-                sortedResults.put(item.getName(), item);
+                results.add(item);
             }
         }
-        return sortedResults;
+        return results;
     }
 
     public Searchable findBestResult(String search) throws BestResultNotFound {
