@@ -2,6 +2,8 @@ package org.skypro.skyshop.product.special;
 
 import org.skypro.skyshop.product.Product;
 
+import java.util.Objects;
+
 public class FixPriceProduct extends Product {
 
     private static final double FIX_PRICE = 100;
@@ -24,4 +26,22 @@ public class FixPriceProduct extends Product {
     public boolean isSpecial() {
         return true;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o != null || getClass() != o.getClass()) {
+            return false;
+        }
+        FixPriceProduct that = (FixPriceProduct) o;
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode());
+    }
 }
+

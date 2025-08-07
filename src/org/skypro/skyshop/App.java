@@ -10,6 +10,7 @@ import org.skypro.skyshop.exceptions.BestResultNotFound;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class App {
 
@@ -130,6 +131,10 @@ public class App {
         Searchable article2 = new Article("Степлеры", "Разнообразие, виды, назначение");
         Searchable article3 = new Article("Кресло руководителя", "Это не просто кресло!");
         Searchable article4 = new Article("Кресло для геймера", "Со специальным антипригарным покрытием!");
+        Searchable article5 = new Article("История создания степлера", "Ученые нашли внеземной след!");
+        Searchable article7 = new Article("Синий маркер +++ степлеры", "Ученые нашли внеземной след!");
+        Searchable article6 = new Article("Самая большая в мире коллекция степлеров", "Самая большая в мире коллекция степлеров была обнаружена у маньяка из поселка Петушки");
+
 
         engine.add(product1);
         engine.add(product2);
@@ -141,11 +146,34 @@ public class App {
 
         System.out.println("Тестирование работы поиска:");
         printSeparator();
-        System.out.println("Поиск по слову \"Степлер\": (результаты упорядочены по именам)");
-        Map<String, Searchable> results = engine.search("СтеПлер");
-        for (Map.Entry<String, Searchable> entry : results.entrySet()) {
-            System.out.println(entry.getValue().getStringRepresentation());
+        System.out.println("Поиск по слову \"Степлер\": (результаты упорядочены по длине имени)");
+        Set<Searchable> results = engine.search("Степлер");
+        for (Searchable result : results) {
+            System.out.println(result.getStringRepresentation());
         }
+
+        printSeparator();
+
+        engine.add(article5);
+        engine.add(article6);
+
+        System.out.println("Поиск по слову \"Степлер\": (результаты упорядочены по длине имени)");
+        results = engine.search("СтеПЛЕР");
+        for (Searchable result : results) {
+            System.out.println(result.getStringRepresentation());
+        }
+
+        printSeparator();
+
+        engine.add(article7);
+
+        System.out.println("Поиск по слову \"Степлер\": (результаты упорядочены по длине имени + \nпо алфавиту при равной длине)");
+        results = engine.search("СтеПЛЕР");
+        for (Searchable result : results) {
+            System.out.println(result.getStringRepresentation());
+        }
+
+
 
         try {
             Searchable bestResult = engine.findBestResult("кресло");
