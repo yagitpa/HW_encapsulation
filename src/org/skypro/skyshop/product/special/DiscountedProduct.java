@@ -2,6 +2,8 @@ package org.skypro.skyshop.product.special;
 
 import org.skypro.skyshop.product.Product;
 
+import java.util.Objects;
+
 public class DiscountedProduct extends Product {
 
     private double basePrice;
@@ -33,6 +35,23 @@ public class DiscountedProduct extends Product {
     @Override
     public boolean isSpecial() {
         return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        DiscountedProduct that = (DiscountedProduct) o;
+        return super.equals(o) && basePrice == that.basePrice && discountWholePercentages == that.discountWholePercentages;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), basePrice, discountWholePercentages);
     }
 }
 

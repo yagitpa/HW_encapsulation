@@ -1,6 +1,7 @@
 package org.skypro.skyshop.search;
 
 import org.skypro.skyshop.exceptions.BestResultNotFound;
+import org.skypro.skyshop.comparators.SortNamesByLengthAndAlphabeticalComparator;
 
 import java.util.*;
 
@@ -12,14 +13,7 @@ public class SearchEngine {
     }
 
     public Set<Searchable> search(String query) {
-        Comparator<Searchable> comparator = (s1, s2) -> {
-            int lengthCompare = Integer.compare(s2.getName().length(), s1.getName().length());
-            if (lengthCompare != 0) {
-                return lengthCompare;
-            }
-            return s1.getName().compareTo(s2.getName());
-        };
-
+        SortNamesByLengthAndAlphabeticalComparator comparator = new SortNamesByLengthAndAlphabeticalComparator();
         Set <Searchable> results = new TreeSet<>(comparator);
         String lowerCaseQuery = query.toLowerCase();
 
