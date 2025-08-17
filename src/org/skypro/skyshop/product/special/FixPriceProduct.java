@@ -2,6 +2,8 @@ package org.skypro.skyshop.product.special;
 
 import org.skypro.skyshop.product.Product;
 
+import java.util.Objects;
+
 public class FixPriceProduct extends Product {
 
     private static final double FIX_PRICE = 100;
@@ -25,3 +27,4 @@ public class FixPriceProduct extends Product {
         return true;
     }
 }
+
