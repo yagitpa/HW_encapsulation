@@ -13,36 +13,40 @@ public class ProductBasket {
     }
 
     public int totalCost() {
-        int sum = 0;
-        for (List<Product> productList : products.values()) {
-            for (Product product : productList) {
-                sum += product.getPrice();
-            }
-        }
-        return sum;
+        return products.values().stream()
+                .flatMap(Collection::stream)
+                .mapToInt(product -> (int) product.getPrice())
+                .sum();
     }
 
     public void printProducts() {
         boolean isEmpty = true;
-        int specialProductCount = 0;
+        int specialProductCount = getSpecialCount();
 
-        for (List<Product> productList : products.values()) {
-            for (Product product : productList) {
-                if (product != null) {
-                    System.out.println(product);
-                    isEmpty = false;
-                }
-                if (product != null && product.isSpecial()) {
-                    specialProductCount++;
-                }
-            }
-        }
+        products.values().stream()
+                .flatMap(Collection::stream)
+                .forEach(product -> {
+                    if (product != null) {
+                        System.out.println(product);
+                    }
+                });
+        isEmpty &= !products.values().stream()
+                .flatMap(Collection::stream)
+                .anyMatch(product -> product != null);
+
         if (isEmpty) {
             System.out.println("В корзине пусто");
         } else {
             System.out.println("ИТОГО: " + totalCost() + " р.");
             System.out.println("Специальных товаров: " + specialProductCount);
         }
+    }
+
+    private int getSpecialCount() {
+        return (int) products.values().stream()
+                .flatMap(Collection::stream)
+                .filter(Product::isSpecial)
+                .count();
     }
 
     public boolean containsProductByName(String name) {
@@ -58,3 +62,4 @@ public class ProductBasket {
         products.clear();
     }
 }
+

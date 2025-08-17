@@ -4,6 +4,7 @@ import org.skypro.skyshop.exceptions.BestResultNotFound;
 import org.skypro.skyshop.comparators.SortNamesByLengthAndAlphabeticalComparator;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SearchEngine {
     private final Set<Searchable> items = new HashSet<>();
@@ -13,16 +14,9 @@ public class SearchEngine {
     }
 
     public Set<Searchable> search(String query) {
-        SortNamesByLengthAndAlphabeticalComparator comparator = new SortNamesByLengthAndAlphabeticalComparator();
-        Set <Searchable> results = new TreeSet<>(comparator);
-        String lowerCaseQuery = query.toLowerCase();
-
-        for (Searchable item : items) {
-            if (item != null && item.getSearchTerm().toLowerCase().contains(lowerCaseQuery)) {
-                results.add(item);
-            }
-        }
-        return results;
+        return items.stream()
+                .filter(item -> item != null && item.getSearchTerm().toLowerCase().contains(query.toLowerCase()))
+                .collect(Collectors.toCollection(() -> new TreeSet<>(new SortNamesByLengthAndAlphabeticalComparator())));
     }
 
     public Searchable findBestResult(String search) throws BestResultNotFound {
