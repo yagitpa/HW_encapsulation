@@ -12,29 +12,22 @@ public class ProductBasket {
         products.computeIfAbsent(name, k -> new ArrayList<>()).add(product);
     }
 
-    public int totalCost() {
+    public double totalCost() {
         return products.values().stream()
                 .flatMap(Collection::stream)
-                .mapToInt(product -> (int) product.getPrice())
+                .mapToDouble(Product::getPrice)
                 .sum();
     }
 
     public void printProducts() {
-        boolean isEmpty = true;
         int specialProductCount = getSpecialCount();
 
         products.values().stream()
                 .flatMap(Collection::stream)
-                .forEach(product -> {
-                    if (product != null) {
-                        System.out.println(product);
-                    }
-                });
-        isEmpty &= !products.values().stream()
-                .flatMap(Collection::stream)
-                .anyMatch(product -> product != null);
+                .filter(Objects::nonNull)
+                .forEach(System.out::println);
 
-        if (isEmpty) {
+        if (products.isEmpty()) {
             System.out.println("В корзине пусто");
         } else {
             System.out.println("ИТОГО: " + totalCost() + " р.");

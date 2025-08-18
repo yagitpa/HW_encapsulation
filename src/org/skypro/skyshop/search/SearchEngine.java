@@ -15,7 +15,8 @@ public class SearchEngine {
 
     public Set<Searchable> search(String query) {
         return items.stream()
-                .filter(item -> item != null && item.getSearchTerm().toLowerCase().contains(query.toLowerCase()))
+                .filter(Objects::nonNull)
+                .filter(item -> item.getSearchTerm().toLowerCase().contains(query.toLowerCase()))
                 .collect(Collectors.toCollection(() -> new TreeSet<>(new SortNamesByLengthAndAlphabeticalComparator())));
     }
 
