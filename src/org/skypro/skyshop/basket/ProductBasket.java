@@ -12,37 +12,34 @@ public class ProductBasket {
         products.computeIfAbsent(name, k -> new ArrayList<>()).add(product);
     }
 
-    public int totalCost() {
-        int sum = 0;
-        for (List<Product> productList : products.values()) {
-            for (Product product : productList) {
-                sum += product.getPrice();
-            }
-        }
-        return sum;
+    public double totalCost() {
+        return products.values().stream()
+                .flatMap(Collection::stream)
+                .mapToDouble(Product::getPrice)
+                .sum();
     }
 
     public void printProducts() {
-        boolean isEmpty = true;
-        int specialProductCount = 0;
+        int specialProductCount = getSpecialCount();
 
-        for (List<Product> productList : products.values()) {
-            for (Product product : productList) {
-                if (product != null) {
-                    System.out.println(product);
-                    isEmpty = false;
-                }
-                if (product != null && product.isSpecial()) {
-                    specialProductCount++;
-                }
-            }
-        }
-        if (isEmpty) {
+        products.values().stream()
+                .flatMap(Collection::stream)
+                .filter(Objects::nonNull)
+                .forEach(System.out::println);
+
+        if (products.isEmpty()) {
             System.out.println("В корзине пусто");
         } else {
             System.out.println("ИТОГО: " + totalCost() + " р.");
             System.out.println("Специальных товаров: " + specialProductCount);
         }
+    }
+
+    private int getSpecialCount() {
+        return (int) products.values().stream()
+                .flatMap(Collection::stream)
+                .filter(Product::isSpecial)
+                .count();
     }
 
     public boolean containsProductByName(String name) {
@@ -58,3 +55,4 @@ public class ProductBasket {
         products.clear();
     }
 }
+
